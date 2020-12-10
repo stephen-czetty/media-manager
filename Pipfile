@@ -6,9 +6,11 @@ name = "pypi"
 [packages]
 mutagen = "*"
 pillow = "*"
+ffmpeg-python = "*"
 
 [dev-packages]
 pylint = "*"
+rope = "*"
 
 [requires]
 python_version = "3.8"
