@@ -3,7 +3,7 @@ import argparse
 import ffmpeg
 
 def create_parser(subparsers: argparse._SubParsersAction):
-    parser = subparsers.add_parser('convert')
+    parser = subparsers.add_parser('extract')
 
     parser.add_argument('input_file', help='Input media file', type=str)
     parser.add_argument('output_file', help='Output media file', type=str)
