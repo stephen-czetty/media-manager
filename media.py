@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env pipenv-shebang
 
 from media_manager import main
 

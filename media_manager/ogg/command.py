@@ -2,9 +2,15 @@ import argparse
 
 import sys
 import base64
+from mutagen import File
 from mutagen.oggopus import OggOpus
+from mutagen.oggvorbis import OggVorbis
 from mutagen.flac import Picture
 from PIL import Image
+
+_image_mimes = {
+    'JPEG': u'image/jpeg'
+}
 
 def create_parser(subparsers: argparse._SubParsersAction):
     parser = subparsers.add_parser('ogg')
@@ -21,21 +27,24 @@ def create_parser(subparsers: argparse._SubParsersAction):
     tag_ogg_parser.add_argument('--title', help='Set title', type=str)
     tag_ogg_parser.set_defaults(func=tag_ogg)
 
+def _open_ogg(file_name):
+    return File(file_name, options=[OggOpus, OggVorbis])
+
 def add_image(args: argparse.Namespace):
     print(f'Adding an image from {args.image_file} to {args.ogg_file}')
 
-    audio = OggOpus(args.ogg_file)
+    audio = _open_ogg(args.ogg_file)
     im = Image.open(args.image_file)
     width, height = im.size
     fmt = im.format
-    print(fmt)
+
     with open(args.image_file, "rb") as c:
         data = c.read()
     picture = Picture()
     picture.data = data
-    picture.type = 17
+    picture.type = 3 # Front cover
     picture.desc = u"Cover Art"
-    picture.mime = u"image/jpeg"
+    picture.mime = _image_mimes[fmt]
     picture.width = width
     picture.height = height
     picture.depth = 24
@@ -48,7 +57,7 @@ def add_image(args: argparse.Namespace):
     audio.save()
 
 def tag_ogg(args: argparse.Namespace):
-    audio = OggOpus(args.ogg_file)
+    audio = _open_ogg(args.ogg_file)
     if args.artist:
         audio['ARTIST'] = args.artist
     if args.title:
