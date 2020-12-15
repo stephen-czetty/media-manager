@@ -1,0 +1,2 @@
+class MediaManagerError(BaseException):
+    pass
