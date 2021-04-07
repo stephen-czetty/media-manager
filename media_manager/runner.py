@@ -1,8 +1,8 @@
 import argparse
-from typing import List
 
 from .extract import command as extract_command
 from .ogg import command as ogg_command
+from .coverimage import command as cover_command
 
 
 def _create_parser() -> argparse.ArgumentParser:
@@ -12,6 +12,7 @@ def _create_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(required=True, help='Subcommands', dest='subcommand')
     extract_command.create_parser(subparsers)
     ogg_command.create_parser(subparsers)
+    cover_command.create_parser(subparsers)
 
     return parser
 
