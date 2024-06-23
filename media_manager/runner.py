@@ -3,6 +3,7 @@ import argparse
 from .extract import command as extract_command
 from .ogg import command as ogg_command
 from .coverimage import command as cover_command
+from .mp4 import command as mp4_command
 
 
 def _create_parser() -> argparse.ArgumentParser:
@@ -13,6 +14,7 @@ def _create_parser() -> argparse.ArgumentParser:
     extract_command.create_parser(subparsers)
     ogg_command.create_parser(subparsers)
     cover_command.create_parser(subparsers)
+    mp4_command.create_parser(subparsers)
 
     return parser
 
